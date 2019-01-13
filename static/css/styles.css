@@ -1,0 +1,122 @@
+.admin-panel{
+    border: 1px solid #999;
+    border-radius: 2px;
+    position: fixed;
+    right: 50px;
+    bottom: 30px;
+    opacity: 0.3;
+    padding: 10px;
+}
+.admin-panel:hover{
+    opacity: 1;
+}
+
+.admin-panel a{
+    display: block;
+    margin: 5px, 0px;
+}
+
+a.edit, a.delete{
+    display: none;
+}
+
+.card-body {
+    margin-left: 5%; //высота
+}
+
+.card-body img {
+    max-height: 300px; //высота
+}
+
+
+img {
+    max-width: 800px; //ширина
+}
+
+body {
+    background-opacity: 0.3;
+    padding-top: 70px;
+    background-image: url(/cake/media/6rdy2.png); /* Путь к фоновому рисунку */
+    background-position: left bottom; /* Положение фона */
+    background-repeat: repeat; /* Повторяем фон по горизонтали */
+}
+
+.thumb img {
+    -webkit-filter: grayscale(0);
+    filter: none;
+    border-radius: 5px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 5px;
+}
+
+.thumb img:hover {
+    -webkit-filter: grayscale(1);
+    filter: grayscale(1);
+}
+
+.thumb {
+    padding: 5px;
+}
+
+.item-responsive {
+  position: relative; /* относительное позиционирование */
+}
+.item-responsive:before {
+  display: block; /* отображать элемент как блок */
+  content: ""; /* содержимое псевдоэлемента */
+  width: 100%; /* ширина элемента */
+}
+.item-16by9 {
+  padding-top: 56,25%; /* (9:16)*100% */
+}
+.item-responsive>.content {
+  position: absolute; /* абсолютное положение элемент */
+  /* положение элемента */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+h1, h2 {
+    font-family: 'Kurale', serif;
+}
+
+h2{
+     font-size: 36px;
+}
+
+h2, h5 {
+    display: inline-block;
+    background-color: rgba(253,239,253,0.85);
+    background-opacity: 0.3;
+}
+
+.menuNames{
+    margin-left: 8px;
+    line-height: 1.8;
+    font-size: 24px;
+    color: black;
+}
+
+.pWithoutback{
+    background-color: rgba(253,239,253,0.85);
+    background-opacity: 0.3;
+}
+
+a{
+    font-family: 'Bad Script', cursive;
+}
+
+.btn-danger{
+    font-family: 'Bad Script', cursive;
+}
+#username {
+    font-family: 'Kurale', serif;
+    position: absolute; /* Абсолютное позиционирование */
+    right: 29%; /* Положение элемента от правого края */
+    top: 20px; /* Положение от верхнего края */
+    width: 225px; /* Ширина блока */
+    padding: 5px; /* Поля вокруг текста */
+ }

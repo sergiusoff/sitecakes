@@ -1,0 +1,15 @@
+{% extends 'cake/cakebase.html' %}
+
+
+{% block title %}
+{{block.super}} - {{ tag.title }}
+{% endblock %}
+
+{% block content %}
+    <h2 class="mt-5">
+        Посты с тэгом: "{{ tag.title|title }}"
+    </h2>
+    {% for post in tag.posts.all %}
+        {% include 'cake/includes/post_card_template.html' %}
+    {% endfor %}
+{% endblock %}

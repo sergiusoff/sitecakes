@@ -1,0 +1,12 @@
+{% extends 'cake/cakebase.html' %}
+
+{% block title %}
+        {{ block.super }} - Главная
+{% endblock %}
+
+{% block content %}
+    <h2 class = "mb-5" >Главная:</h2>
+    {% for post in page_object.object_list %}
+        {% include 'cake/includes/post_card_template.html' %}
+    {% endfor %}
+{% endblock %}

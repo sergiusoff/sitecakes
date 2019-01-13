@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ block.super }} - Войти
+{% endblock %}
+
+
+{% block content %}
+    <form action="" method="post"  style="background-color: rgba(253,239,253,0.85);
+    background-opacity: 0.2">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Войти</button>
+    </form>
+{% endblock %}
+

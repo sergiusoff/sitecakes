@@ -1,0 +1,193 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+
+    <link href="https://fonts.googleapis.com/css?family=Bad+Script|Kurale" rel="stylesheet">
+    <title>
+        {% block title %}
+        Пироги от Полины
+        {% endblock %}
+    </title>
+</head>
+<body>
+
+<nav class="navbar fixed-top" style="background-color: #DEC2D9">
+    <div class="container">
+
+        <div class="navbar-header">
+            <h1>Пироги от Полины</h1>
+        </div>
+
+
+        <div id="username">
+            {% if request.user.is_authenticated %}
+                <p>Login as {{request.user}}</p>
+            {% endif %}
+        </div>
+        <form class="navbar-form navbar-left" role="search" action="{% url 'posts_list_url' %}">
+            <input class="form-control mr-sm-2" type="search" placeholder="Введите для поиска" aria-label="Search" name="search">
+            <button type="submit" class="btn btn-default">Поиск</button>
+        </form>
+
+    </div>
+</nav>
+
+<div class="container-fluid mt-5">
+    <div class="row">
+        <header class="col-md-2 offset-md-2">
+            <nav class="sidebar-sticky bg-light navbar-light navbar-expand-md" style="opacity: 0.98">
+                <!--
+                <a href="#" class="logo navbar-brand">Logo</a>
+                -->
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent" style="background-color: #DEC2D9; opacity: 0.5">
+                    <ul class="navbar-nav mr-auto flex-column">
+                        <li class="nav-item active">
+                            <a class="menuNames" href="{% url 'posts_list_url' %}" class="nav-link">Главная</a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="menuNames" href="{% url 'tags_list_url' %}" class="nav-link">Все тэги</a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="menuNames" href="{% url 'imgs_list_url' %}" class="nav-link">Галерея</a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="menuNames" href="{% url 'about' %}" class="nav-link">Контакты</a>
+                        </li>
+                            {% if request.user.is_authenticated %}
+                                <li class="nav-item active">
+                                    <a class="menuNames" href="{% url 'logout' %}" class="nav-link">Выйти из профиля</a>
+                                </li>
+                            {% else %}
+                                <li class="nav-item active">
+                                    <a class="menuNames" href="{% url 'login' %}" class="nav-link">Войти</a>
+                                </li>
+                                <li class="nav-item active">
+                                    <a class="menuNames" href="{% url 'register' %}" class="nav-link">Регистрация</a>
+                                </li>
+                            {% endif %}
+                    </ul>
+                </div>
+            </nav>
+        </header>
+
+
+        <!-- end header -->
+
+
+        <div class="col-5  mt-4">
+            {% block content %}
+            There is no any content
+            {% endblock %}
+
+            {% if is_paginated %}
+            <nav aria-label="...">
+                <ul class="pagination">
+                    <li class="page-item {% if not prev_url %} disabled {% endif %}">
+                        <a class="page-link" href="{{ prev_url }}" tabindex="-1" aria-disabled="true">Предыдущие</a>
+                    </li>
+
+                    {% for n in page_object.paginator.page_range %}
+                    {% if page_object.number == n %}
+                    <li class="page-item active" aria-current="page">
+                        <a class="page-link" href="?page={{ n }}">{{ n }} <span class="sr-only">(current)</span></a>
+                    </li>
+                    {% elif page_object.number|add:-2 <= n and page_object.number|add:2 >= n %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ n }}">{{ n }}</a>
+                    </li>
+                    {% endif %}
+                    {% endfor %}
+
+                    <li class="page-item {% if not next_url %} disabled {% endif %}">
+                        <a class="page-link" href="{{ next_url }}" tabindex="-1" aria-disabled="true">Следующие</a>
+                    </li>
+                </ul>
+            </nav>
+            {% endif %}
+
+
+        </div>
+
+        <!-- end main -->
+    </div>
+</div>
+
+
+
+{% if request.user.is_authenticated and request.user.is_staff %}
+<div class="admin-panel align-items-center">
+    <a href="/admin" class="btn btn-outline-info">Admin</a>
+    {% block admin-panel %}
+    {% endblock %}
+</div>
+{% endif %}
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+</body>
+</html>
+
+
+<!--
+<nav class="nav flex-sm-column" style="background-color: #e3f2fd;">
+  <a class="nav-link" href="{% url 'posts_list_url' %}">All Posts</a>
+  <a class="nav-link" href="{% url 'imgs_list_url' %}">Gallery</a>
+  <a class="nav-link" href="{% url 'tags_list_url' %}">Tags</a>
+  <a class="nav-link" href="{% url 'about' %}">About</a>
+</nav>
+
+<ul class="nav flex-column">
+  <li class="nav-item">
+    <a class="nav-link" href="{% url 'posts_list_url' %}">All Posts</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="{% url 'imgs_list_url' %}">Gallery</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="{% url 'tags_list_url' %}">Tags</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="{% url 'about' %}">About</a>
+  </li>
+</ul>
+
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
+    <a class="navbar-brand" href="#">Navbar</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="{% url 'posts_list_url' %}">All Posts</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="{% url 'imgs_list_url' %}">Gallery</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="{% url 'tags_list_url' %}">Tags</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="{% url 'about' %}">About</a>
+            </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0" action="{% url 'posts_list_url' %}">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+    </div>
+</nav>
+-->

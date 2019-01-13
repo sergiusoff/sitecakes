@@ -1,0 +1,14 @@
+{% extends 'cake/cakebase.html' %}
+
+{% block title %}
+    {{ block.super }} - Удалить тэг "{{ tag.title|title }}"
+{% endblock %}
+
+{% block content %}
+    <form action="{{ tag.get_delete_url }}" method="post">
+        {% csrf_token %}
+        <h3>Вы уверены, что хотите удалить тэг <b>"{{ tag.title|title }}"</b></h3>
+        <a href="{{ tag.get_absolute_url }}">Выйти</a>
+        <button type="submit" class="btn btn-danger">Удалить</button>
+    </form>
+{% endblock %}

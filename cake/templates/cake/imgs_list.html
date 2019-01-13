@@ -1,0 +1,136 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link href="https://fonts.googleapis.com/css?family=Bad+Script|Kurale" rel="stylesheet">
+    <title>
+        {% block title %}
+        Пироги от Полины - Галерея
+        {% endblock %}
+    </title>
+    <style>
+        h1, h2 {
+            font-family: 'Kurale', serif;
+        }
+
+        .menuNames{
+            margin-left: 8px;
+            line-height: 1.8;
+            font-size: 24px;
+            color: black;
+        }
+
+         .namesImgs{
+             background-color: rgba(253,239,253,0.85);
+            font-size: 16px;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+
+
+
+<nav class="navbar fixed-top" style="background-color: #DEC2D9">
+    <div class="container">
+
+        <div class="navbar-header">
+            <h1>Пироги от Полины</h1>
+        </div>
+
+        <div id="username">
+            {% if request.user.is_authenticated %}
+                <p>Login as {{request.user}}</p>
+            {% endif %}
+        </div>
+
+        <form class="navbar-form navbar-left" role="search" action="{% url 'posts_list_url' %}">
+            <input class="form-control mr-sm-2" type="search" placeholder="Введите для поиска" aria-label="Search" name="search">
+            <button type="submit" class="btn btn-default">Поиск</button>
+        </form>
+
+    </div>
+</nav>
+
+<div class="container-fluid mt-5">
+    <div class="row">
+        <header class="col-md-2 offset-md-2">
+            <nav class="sidebar-sticky bg-light navbar-light navbar-expand-md" style="opacity: 0.98">
+                <!--
+                <a href="#" class="logo navbar-brand">Logo</a>
+                -->
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent" style="background-color: #DEC2D9; opacity: 0.5">
+                    <ul class="navbar-nav mr-auto flex-column">
+                        <li class="nav-item active">
+                            <a class="menuNames" href="{% url 'posts_list_url' %}" class="nav-link">Главная</a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="menuNames" href="{% url 'tags_list_url' %}" class="nav-link">Все тэги</a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="menuNames" href="{% url 'imgs_list_url' %}" class="nav-link">Галерея</a>
+                        </li>
+                        <li class="nav-item active">
+                            <a class="menuNames" href="{% url 'about' %}" class="nav-link">Контакты</a>
+                        </li>
+                        {% if request.user.is_authenticated %}
+                            <li class="nav-item active">
+                                <a class="menuNames" href="{% url 'logout' %}" class="nav-link">Выйти из профиля</a>
+                            </li>
+                        {% else %}
+                            <li class="nav-item active">
+                                <a class="menuNames" href="{% url 'login' %}" class="nav-link">Войти</a>
+                            </li>
+                            <li class="nav-item active">
+                                <a class="menuNames" href="{% url 'register' %}" class="nav-link">Регистрация</a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <div class="col-5  mt-4">
+            <div class="container">
+                <div class="row">
+                    {% for img in imgs %}
+                        <div class="col-lg-3 col-md-4 col-6 thumb">
+                                <a data-fancybox="gallery" href="{{ img.img.url }} ">
+                                    <img class="img-fluid" src="{{ img.img.url }}" alt="...">
+                                </a>
+                                <a class="namesImgs" href="{{ img.get_absolute_url }}">{{img.title}}</a>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% if request.user.is_authenticated and request.user.is_staff %}
+    <div class="admin-panel align-items-center">
+        <a href="/admin" class="btn btn-outline-info">Admin</a>
+        {% block admin-panel %}
+        {% endblock %}
+    </div>
+{% endif %}
+
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.6/dist/jquery.fancybox.min.css" />
+<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.6/dist/jquery.fancybox.min.js"></script>
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<div class="card mb-4" style="background-color: #DEC2D9">
+    <div class="card-header">
+        {{ post.date_pub }}
+    </div>
+    <div class="card-body">
+        <h4 class="card-title">{{ post.title }}</h4>
+        <p class="card-text">{{ post.body|truncatewords:15 }}</p>
+        <p>
+        {% if post.img %}
+            <img src="{{ post.img.url }}">
+        {% endif %}
+        </p>
+
+        <a href="{{ post.get_absolute_url }}" class="btn btn-light">Читать далее</a>
+
+    </div>
+    <div class="card-footer text-muted">
+        Tags:
+        {% if post.tags.count == 0 %}
+                <a>there's no tags here</a>
+        {% endif %}
+
+        {% for tag in post.tags.all %}
+            <a href="{{ tag.get_absolute_url }}">{{ tag.title }}</a>
+            {% if tag != post.tags.last %}
+                <a>,</a>
+            {% endif %}
+        {% endfor %}
+
+    </div>
+</div>

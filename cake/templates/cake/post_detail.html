@@ -1,0 +1,19 @@
+{% extends 'cake/cakebase.html' %}
+
+
+{% block title %}
+    {{block.super}} - {{ post.title }}
+{% endblock %}
+
+{% block content %}
+    <h2 class="mt-5">
+         {{ post.title }}
+    </h2>
+    <p class = "pWithoutback">
+         {{ post.body }}
+    </p>
+
+    {% if post.img %}
+        <img src="{{ post.img.url }}">
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends 'cake/cakebase.html' %}
+
+{% block title %}
+    {{block.super}} - Удалить пост "{{ post.title|title }}" -
+{% endblock %}
+
+{% block content %}
+    <form action="{{ post.get_delete_url }}" method="post">
+        {% csrf_token %}
+        <h2>Вы уверены, что хотите удалить <b>"{{ post.title|title }}"</b></h2>
+        <a href="{{ post.get_absolute_url }}">Выйти</a>
+        <button type="submit" class="btn btn-danger">Удалить</button>
+    </form>
+{% endblock %}
